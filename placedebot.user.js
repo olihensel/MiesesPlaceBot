@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MiesesPlaceBot Bot
 // @namespace    https://github.com/olihensel/MiesesPlaceBot
-// @version      16
+// @version      17
 // @description  /r/place bot
 // @author       olihensel, NoahvdAa, reckter, SgtChrome, nama17
 // @match        https://www.reddit.com/r/place/*
@@ -21,7 +21,7 @@ var placeOrders = [];
 var accessToken;
 var canvas = document.createElement('canvas');
 
-const VERSION = 16
+const VERSION = 17
 var UPDATE_PENDING = false;
 
 const COLOR_MAPPINGS = {
@@ -153,12 +153,12 @@ async function attemptPlace() {
 		setTimeout(attemptPlace, waitFor);
 		return;
 	}
-	
+
 	setTimeout(attemptPlace, 30000); // probeer opnieuw in 30sec.
 }
 
 function updateOrders() {
-	fetch(`https://github.com/olihensel/MiesesPlaceBot/raw/main/pixels.json`, {cache: "no-store"}).then(async (response) => {
+	fetch(`https://raw.githubusercontent.com/olihensel/MiesesPlaceBot/main/pixels.json`, { cache: "no-store" }).then(async (response) => {
 		if (!response.ok) return console.warn('Bestellungen können nicht geladen werden!');
 		const data = await response.json();
 
@@ -191,8 +191,8 @@ function updateOrders() {
 }
 
 
-function getCanvasId(x,y) {
-	return (x <1000) + (y<1000)*2
+function getCanvasId(x, y) {
+	return (x > 1000) + (y > 1000) * 2
 }
 /**
  * Places a pixel on the canvas, returns the "nextAvailablePixelTimestamp", if succesfull
@@ -215,7 +215,7 @@ async function place(x, y, color) {
 							'y': y % 1000
 						},
 						'colorIndex': color,
-						'canvasIndex': getCanvasId(x,y)
+						'canvasIndex': getCanvasId(x, y)
 					}
 				}
 			},
